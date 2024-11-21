@@ -1,0 +1,38 @@
+//Basic calaculator(only does single digits)
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter expression:");
+        String number = input.nextLine();
+        String[] array = number.split("");
+        int number1 = Integer.parseInt(array[0]);
+        int number2 = Integer.parseInt(array[2]);
+        System.out.println("Enter 1 for addition, enter 2 for subtraction, 3 for multiply, 4 for division");
+        int choice = input.nextInt();
+        if (choice >= 1 && choice <= 4) {
+            menu(choice, number1, number2);
+        } else {
+            System.out.println("Invalid choice.");
+        }
+    }
+
+    public static void menu(int choice, int number1, int number2) {
+        if (choice == 1) {
+            System.out.println(number1 + number2);
+        } else if (choice == 2) {
+            System.out.println(number1 - number2);
+        } else if (choice == 3) {
+            System.out.println(number1 * number2);
+        } else if (choice == 4) {
+            if (number2 != 0) {
+                System.out.println(number1 / number2);
+            } else {
+                System.out.println("Division by zero is not allowed.");
+            }
+        } else {
+            System.out.println("Invalid choice.");
+        }
+    }
+}
