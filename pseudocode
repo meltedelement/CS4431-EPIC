@@ -1,0 +1,32 @@
+text lmao
+
+Skye's thinking process of how to approach the problem:
+
+IN GENERAL:
+- Present simple menu, no options really because we're just evaluating an expression first and foremost
+- Check if expression is 'valid', only ()+-*/^ etc, and in a logical order. This should be its own class I think.
+- Have a big function Calculate that would evaluate a string expression WITHOUT brackets (simplicities sake)
+- In the main file, find the innermost set of brackets and calculate those then work from the inside out.
+- Return answer and get good marks. Woo!
+
+
+
+VALIDATION CHECKS:
+- Should only contain digits, operators, and brackets. No equals allowed because its an expression not an equation.
+- For every opening bracket there should be closing brackets.
+- Operators shouldn't be beside each other like +*, with the exception of - because of negatives.
+- Fullstops for decimals cOuLd be allowed but depends how the Calculator works... circle back to it.
+- If possible use the try/catch and throw exception to tell the user what is wrong with their input.
+- Ideally don't let it actually run errors, catch them before so we don't have to restart the program.
+
+STRING PARSING:
+- Firstly if the given string contains brackets, find the inner expression and recursively call the string calculate function.
+     (which James is working on logic for atm)
+
+
+ACTUAL CALCULATION:
+- My main idea is based on the fact for a given expression, there will be one more 'number' than there are operators.
+- So, go through each character and if it is an operator, then everything between that and the next one is a number.
+- We  can then get the indexes of operators and operands separated in arrays or something, and convert the actual numbers to doubles.
+- At this stage operators.length() == operands.length() -1
+- Assign order of operations to the list of operators, then evaluate one after the other.
