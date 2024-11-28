@@ -10,30 +10,37 @@ public class App {
         System.out.println("Enter an expression to be evaluated!");
         String userIn = scan.nextLine();
 
+        App appy = new App();
 
-        bracketSplitup(userIn);
+        appy.bracketSplitup(userIn);
 
     }
 
 
+    public String[] bracketSplitup(String expressionSplit){
+        return bracketSplitup(expressionSplit.split(""));
+    }
+    
     public String[] bracketSplitup(String[] expressionSplit){
+        int iterator = 0;
         boolean bracketFound = false;
         for (String x : expressionSplit){
+            iterator ++;
             if (x == "("){
                 bracketFound = true;
-                openBracketLocation = Arrays.binarySearch(expressionSplit, x);
+                openBracketLocation = iterator;
             }
             else if (x == ")"){
                 bracketFound = true;
 
-                closeBracketLocation = Arrays.binarySearch( expressionSplit, x);
+                closeBracketLocation = iterator;
                 break;
             }
         }
         if (bracketFound){
-            return(bracketSplitup(getSliceOfArray(expressionSplit, openBracketLocation, closeBracketLocation)))
+            return(bracketSplitup(getSliceOfArray(expressionSplit, openBracketLocation, closeBracketLocation)));
         }
-        return(expressionSplit);
+        return(calculate(expressionSplit));
     }
 
     public static String[] getSliceOfArray(String[] arr, int start,  int end){
