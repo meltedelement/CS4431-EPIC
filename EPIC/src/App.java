@@ -11,7 +11,7 @@ public class App {
         String userIn = scan.nextLine();
 
 
-        bracketSplitup(userIn)
+        bracketSplitup(userIn);
 
     }
 
