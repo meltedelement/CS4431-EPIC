@@ -13,6 +13,7 @@ public abstract class Calculate {
                 System.out.printf("Multiplying %.2f and %.2f... result %.2f%n", i, j, i * j);
                 return i * j;
             case "/":
+                // I feel like there is potential for a / by 0 error here which is bad
                 System.out.printf("Dividing %.2f by %.2f... result %.2f%n", i, j, i / j);
                 return i / j;
             case "^":
