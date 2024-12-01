@@ -30,3 +30,7 @@ ACTUAL CALCULATION:
 - We  can then get the indexes of operators and operands separated in arrays or something, and convert the actual numbers to doubles.
 - At this stage operators.length() == operands.length() -1
 - Assign order of operations to the list of operators, then evaluate one after the other.
+
+
+CREATIVITY MARKS IDEAS (30% we need to have actual things on this):
+-
