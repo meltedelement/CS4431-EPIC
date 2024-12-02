@@ -13,9 +13,13 @@ public abstract class Calculate {
                 System.out.printf("Multiplying %.2f and %.2f... result %.2f%n", i, j, i * j);
                 return i * j;
             case "/":
-                // I feel like there is potential for a / by 0 error here which is bad
-                System.out.printf("Dividing %.2f by %.2f... result %.2f%n", i, j, i / j);
-                return i / j;
+                // Try catch to handle division by 0 errors
+                try {
+                    System.out.printf("Dividing %.2f by %.2f... result %.2f%n", i, j, i / j);
+                    return i / j;
+                } catch (ArithmeticException e) {
+                    System.err.println("Arithmetic error when dividing... ensure divisor is non-zero!\n" + e);
+                }
             case "^":
                 System.out.printf("Calculating %.2f to the power of %.2f... result %.2f%n", i, j, Math.pow(i,j));
                 return Math.pow(i,j);
