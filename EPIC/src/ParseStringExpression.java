@@ -13,7 +13,7 @@ Explanation for how this works:
 */
 
 // EXAMPLE METHOD CALL:
-// double result = ParseStringExpression.evaluate("-15/3+2^3--7", "^*/+-");
+// double result = ParseStringExpression.evaluate("-15/3+2^3--7");
 
 import java.util.ArrayList;
 
@@ -52,6 +52,8 @@ public abstract class ParseStringExpression {
 
 
     public static double evaluate(String expression) {
+        operands.clear();
+        operators.clear();
         expression = expression.replaceAll("\\s",""); // remove all whitespace
         operands.clear();
         // This is the main method takes an input string expression without brackets and evaluates it.
@@ -74,7 +76,6 @@ public abstract class ParseStringExpression {
                 operators.remove(operator);
             }
         }
-
         return operands.get(0);
     }
 }

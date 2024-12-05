@@ -1,4 +1,4 @@
-public class Jamesbit {
+public class App {
     int openBracketLocation= 0;
     int closeBracketLocation = 0;
 
@@ -18,21 +18,18 @@ public class Jamesbit {
 
 
         String sub = expressionSplit.substring(openBracketLocation, closeBracketLocation - 1);
-        System.out.println("calling " + sub + " on skyes bit");
         String result = String.valueOf(ParseStringExpression.evaluate(sub));
         expressionSplit = expressionSplit.replace("(" + sub + ")", result);
         return expressionSplit;
     }
 
     public static void main(String[] args){
-        Jamesbit james = new Jamesbit();
+        App appy = new App();
         String test = "(3 + 2)+(8 * 9)";
-        test = james.bracketSplitup(test);
+        test = appy.bracketSplitup(test);
         while (test.contains("(")){
-            //System.out.print(test);
-            test = james.bracketSplitup(test);
+            test = appy.bracketSplitup(test);
         }
-        System.out.println("calling " + test + " on skyes bit");
         System.out.println(ParseStringExpression.evaluate(test));
     }
 }
