@@ -53,6 +53,7 @@ public abstract class ParseStringExpression {
 
     public static double evaluate(String expression) {
         expression = expression.replaceAll("\\s",""); // remove all whitespace
+        operands.clear();
         // This is the main method takes an input string expression without brackets and evaluates it.
         String orderOfOperations = "^*/+-"; // Can be changed for additional operators
         splitEquation(expression, orderOfOperations);

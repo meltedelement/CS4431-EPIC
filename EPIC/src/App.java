@@ -1,5 +1,5 @@
 import java.util.Scanner;
-import java.util.Arrays; 
+import java.util.ArrayList;
 
 public class App {
     int openBracketLocation;
@@ -7,21 +7,26 @@ public class App {
     public static void main(String[] args) throws Exception {
         Scanner scan = new Scanner(System.in);
 
+        ArrayList<String> orderedBracketContents = new ArrayList<>();
+
         System.out.println("Enter an expression to be evaluated!");
         String userIn = scan.nextLine();
 
         App appy = new App();
 
-        appy.bracketSplitup(userIn);
+        appy.bracketSplitup(userIn, orderedBracketContents);
 
+        for(String x:orderedBracketContents){
+            System.out.println(x);
+        }
     }
 
 
-    public String[] bracketSplitup(String expressionSplit){
-        return bracketSplitup(expressionSplit.split(""));
+    public void bracketSplitup(String expressionSplit, ArrayList<String> orderedBracketContents ){
+        bracketSplitup(expressionSplit.split(""), orderedBracketContents);
     }
     
-    public String[] bracketSplitup(String[] expressionSplit){
+    public void bracketSplitup(String[] expressionSplit, ArrayList<String> orderedBracketContents){
         int iterator = 0;
         boolean bracketFound = false;
         for (String x : expressionSplit){
@@ -38,10 +43,13 @@ public class App {
             }
         }
         if (bracketFound){
-            return(bracketSplitup(getSliceOfArray(expressionSplit, openBracketLocation, closeBracketLocation)));
+            orderedBracketContents.add(getSliceOfArray(expressionSplit, openBracketLocation, closeBracketLocation).toString());
         }
-        return(calculate(expressionSplit));
+        orderedBracketContents.add(expressionSplit.toString());
     }
+
+
+
 
     public static String[] getSliceOfArray(String[] arr, int start,  int end){
 
