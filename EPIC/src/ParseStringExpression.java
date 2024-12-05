@@ -1,4 +1,4 @@
-Com/*
+/*
 Explanation for how this works:
  - First of all it will take the input expression, and create a list of operators (symbols) and operands (numbers)
    This is achieved by finding 2 operators from a list of valid ones, then setting everything in between to be an operand.
@@ -26,7 +26,7 @@ public abstract class ParseStringExpression {
         // This method splits the equation into a list of operators, and a list of operands.
         // It is private because it should only be called from within this class, in evaluate.
 
-        int startIndex = -1; // index of the start of an operand
+        int operatorIndex = -1; // index of the start of an operand
 
         // loop through every single character in the expression on its own
         for (int i = 0; i < expression.length(); i++) {
@@ -41,19 +41,20 @@ public abstract class ParseStringExpression {
                 }
 
                 // for every operator, everything between it and the last one is an operand
-                String between = expression.substring(startIndex+1, i);
+                String between = expression.substring(operatorIndex+1, i);
                 operands.add(Double.valueOf(between));
-                startIndex = i;
+                operatorIndex = i;
             }
         }
-        String last = expression.substring(startIndex+1);
+        String last = expression.substring(operatorIndex+1);
         operands.add(Double.valueOf(last));
     }
 
 
-    public static double evaluate(String expression, String orderOfOperations) {
+    public static double evaluate(String expression) {
         expression = expression.replaceAll("\\s",""); // remove all whitespace
         // This is the main method takes an input string expression without brackets and evaluates it.
+        String orderOfOperations = "^*/+-"; // Can be changed for additional operators
         splitEquation(expression, orderOfOperations);
         if (operators.size() + 1 != operands.size()) {
             System.out.println("Error evaluating expression, disallowed sets of operands and operators...");
