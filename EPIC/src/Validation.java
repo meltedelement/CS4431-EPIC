@@ -7,11 +7,6 @@ import java.util.ArrayList;
 public class Validation{
     public boolean valid = true;
 
-    public boolean isValid(String s) {
-        checkCharacters(s);
-        checkBrackets(s);
-        return valid;
-    }
 
     //checks no letters
     private void checkCharacters(String s){
@@ -24,11 +19,13 @@ public class Validation{
         }
     
         for (int i = 0; i < s.length(); i++){
-        if (!(Character.isDigit(s.charAt(i)) || operators.contains(s.charAt(i)))){
+        if (!(Character.isDigit(s.charAt(i)) || operators.contains(s.charAt(i)))){      //should this be || or && ?
                 valid = false;
             }   
         }
     }
+
+    //input: "+", if (!(number or operator)), if (!(true false)), if(false true), called valid false for operators surely?
 
     //checks number of ( = number of )
     private void checkBrackets(String s){
@@ -50,6 +47,13 @@ public class Validation{
             valid = false;
         }
     }
+
+    public boolean isValid(String s) {
+        checkCharacters(s);
+        checkBrackets(s);
+        return valid;
+    }
+    
 }
 
 //for other places:
