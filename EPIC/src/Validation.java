@@ -5,30 +5,44 @@ import java.util.ArrayList;
 
 
 public class Validation{
-    public boolean valid = true;
 
+    public boolean isValid(String s) {
+        boolean validCharacters = checkCharacters(s);
+        boolean validBrackets = checkBrackets(s);
+
+        //&& logic only returns true if BOTH are true
+        return validCharacters && validBrackets;
+    }
+   
 
     //checks no letters
-    private void checkCharacters(String s){
+    private boolean checkCharacters(String s){
         //for loop each char of string, check if numbers, operator, else valid = false
 
         ArrayList<Character> operators = new ArrayList<>();
-        char[] charOperators = {'+', '-', '*', '/', '^'};
+        char[] charOperators = {'+', '-', '*', '/', '^', ' ', '(',')'};
         for (char c : charOperators) {
         operators.add(c);
         }
+
+        int characterInvalid = 0; //only valid if = 0
     
         for (int i = 0; i < s.length(); i++){
-        if (!(Character.isDigit(s.charAt(i)) || operators.contains(s.charAt(i)))){      //should this be || or && ?
-                valid = false;
-            }   
+            if (!(Character.isDigit(s.charAt(i)) || operators.contains(s.charAt(i)))){      //should this be || or && ?
+                characterInvalid++;
+            } 
         }
+
+        if (characterInvalid != 0){
+            return false;
+        }
+
+        return true;
     }
 
-    //input: "+", if (!(number or operator)), if (!(true false)), if(false true), called valid false for operators surely?
 
     //checks number of ( = number of )
-    private void checkBrackets(String s){
+    private boolean checkBrackets(String s){
 
         char openBracket = '(';
         char closedBracket = ')';
@@ -44,16 +58,10 @@ public class Validation{
         }
 
         if (bracketsPairsBalanced != 0){
-            valid = false;
-        }
+            return false;
+        } 
+        return true;
     }
-
-    public boolean isValid(String s) {
-        checkCharacters(s);
-        checkBrackets(s);
-        return valid;
-    }
-    
 }
 
 //for other places:
