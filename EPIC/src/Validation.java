@@ -2,20 +2,14 @@ import java.util.ArrayList;
 
 //what needs to be checked: no letters, no symbols (other than operators), brackets are finished, 
 
-
-
 public class Validation{
 
     public boolean isValid(String s) {
-        boolean validCharacters = checkCharacters(s);
-        boolean validBrackets = checkBrackets(s);
-
         //&& logic only returns true if BOTH are true
-        return validCharacters && validBrackets;
+        return checkCharacters(s) && checkBrackets(s);
     }
    
-
-    //checks no letters
+    //checks only digits(operands) and operators
     private boolean checkCharacters(String s){
         //for loop each char of string, check if numbers, operator, else valid = false
 
@@ -40,19 +34,14 @@ public class Validation{
         return true;
     }
 
-
     //checks number of ( = number of )
     private boolean checkBrackets(String s){
-
-        char openBracket = '(';
-        char closedBracket = ')';
-
         int bracketsPairsBalanced = 0;
 
         for (int i = 0; i < s.length(); i++){
-            if (s.charAt(i) == openBracket){
+            if (s.charAt(i) == '('){
                 bracketsPairsBalanced++;
-            } else if (s.charAt(i) == closedBracket){
+            } else if (s.charAt(i) == ')'){
                 bracketsPairsBalanced--;
             }
         }
