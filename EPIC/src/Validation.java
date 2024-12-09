@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class Validation{
 
-    public boolean isValid(String s) {
+    public static boolean isValid(String s) {
         //&& logic only returns true if BOTH are true
         return checkCharacters(s) && checkBrackets(s);
     }
    
     //checks only digits(operands) and operators
-    private boolean checkCharacters(String s){
+    private static boolean checkCharacters(String s){
         //for loop each char of string, check if numbers, operator, else valid = false
 
         ArrayList<Character> operators = new ArrayList<>();
@@ -35,7 +35,7 @@ public class Validation{
     }
 
     //checks number of ( = number of )
-    private boolean checkBrackets(String s){
+    private static boolean checkBrackets(String s){
         int bracketsPairsBalanced = 0;
 
         for (int i = 0; i < s.length(); i++){
