@@ -18,8 +18,9 @@ public abstract class ParseStringExpression {
     public static ArrayList<Double> operands = new ArrayList<Double>();
 
     public static void splitEquation(String expression, String orderOfOperations) {
+        operands.clear();
+        operators.clear();
         // This method splits the equation into a list of operators, and a list of operands.
-        // It is private because it should only be called from within this class, in evaluate.
 
         int operatorIndex = -1; // index of the start of an operand
 
@@ -47,14 +48,15 @@ public abstract class ParseStringExpression {
 
 
     public static double evaluate(String expression) {
-        operands.clear();
-        operators.clear();
         expression = expression.replaceAll("\\s",""); // remove all whitespace
         // This is the main method takes an input string expression without brackets and evaluates it.
         String[] orderOfOperations = {"^", "*/", "+-"}; // Can be changed for additional operators
+
         splitEquation(expression, String.join("", orderOfOperations));
-        if (operators.size() + 1 != operands.size()) {
-            System.out.println("Error evaluating expression, disallowed sets of operands and operators...");
+        try {
+            assert operators.size() + 1 == operands.size(): "Mismatched sets of operands and operators...";
+        } catch (AssertionError e) {
+            System.out.println(e.getMessage());
         }
         // loop through each operator in order of importance
         for (int i=0; i<orderOfOperations.length; i++) {
