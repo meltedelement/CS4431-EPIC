@@ -22,11 +22,16 @@ public class Menu {
             System.out.print("Please enter an expression to be evaluated: ");
             String str = input.nextLine();
             while (!Validation.isValid(str)) {
-                System.out.println("Please try again, enter an expression to be evaluated: ");
+                System.out.print("Please try again, enter an expression to be evaluated: ");
                 str = input.nextLine();
             }
-
-
+            System.out.println("Let's start our calculations!\n");
+            App appy = new App();
+            while (str.contains("(")){
+                str = appy.bracketSplitup(str);
+            }
+            double result = ParseStringExpression.evaluate(str);
+            System.out.println("\n...and it's as easy as that! Our result is " + result + "\n");
         }
     }
 

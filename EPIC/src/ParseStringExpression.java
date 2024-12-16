@@ -78,8 +78,9 @@ public abstract class ParseStringExpression {
                 String secondOperator = String.valueOf(precedence.charAt(1));
 
                 while (operators.contains(firstOperator) || operators.contains(secondOperator)) {
-                    if (operators.indexOf(secondOperator)==-1 || (operators.indexOf(secondOperator) > 0
-                            && operators.indexOf(firstOperator) < operators.indexOf(secondOperator)) ) {
+                    int in1 = operators.indexOf(firstOperator);
+                    int in2 = operators.indexOf(secondOperator);
+                    if (in2==-1 || (in1 < in2 && in1!=-1) ) {
                         // if the first operator is before the second one when read left to right
 
                         int index = operators.indexOf(firstOperator);
