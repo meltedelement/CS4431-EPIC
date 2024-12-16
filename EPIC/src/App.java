@@ -18,6 +18,7 @@ public class App {
 
 
         String sub = expressionSplit.substring(openBracketLocation, closeBracketLocation - 1);
+        System.out.println("Now we work through the expression " + sub);
         String result = String.valueOf(ParseStringExpression.evaluate(sub));
         expressionSplit = expressionSplit.replace("(" + sub + ")", result);
         return expressionSplit;
