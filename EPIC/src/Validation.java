@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-//what needs to be checked: no letters, no symbols (other than operators), brackets are finished, 
+//what needs to be checked: no letters, no symbols (other than operators), brackets are finished, and minumum expression parameters, and valid expression for 1 more operand than operator
 
 public class Validation{
 
@@ -8,29 +8,29 @@ public class Validation{
     public static ArrayList<Character> operators = new ArrayList<>();
     public static char[] charOperators = {'+', '-', '*', '/', '^', ' ', '(',')','>','.'};
     
-    //the throws InterruptedException is to allow use of Thread.sleep - the exception is thrown if the Thread is interrupted WHEN sleeping
+    //the throws InterruptedException is to allow use of Thread.sleep - (the exception is thrown if the Thread is interrupted WHEN sleeping) -- delay required as error printing is slower than printing, leading to an incorrect order in the terminal
     public static boolean isValid(String s) throws InterruptedException {
-        //&& logic only returns true if BOTH are true
+        //&& logic only returns true if ALL are true
         return checkCharacters(s) && checkBrackets(s) && checkExpression(s);
     }
    
-    //checks only digits(operands) and operators
+    //checks that only operands and operators
     private static boolean checkCharacters(String s) throws InterruptedException{
-        //for loop each char of string, check if numbers, operator, else valid = false
-
+        //for eacch character in charOperators... add to array list
         for (char c : charOperators) {
             operators.add(c);
         }
 
-        int characterInvalid = 0; //only valid if = 0
+        int characterValid = 0; //only valid if = 0
     
+        //for loop each char of string, check if numbers, operator, else valid = false
         for (int i = 0; i < s.length(); i++){
             if (!(Character.isDigit(s.charAt(i)) || operators.contains(s.charAt(i)))){      
-                characterInvalid++;
+                characterValid++;
             } 
         }
 
-        if (characterInvalid != 0){
+        if (characterValid != 0){
             System.err.println("Invalid character(s) in expression - Requires only intergers, decimals, and operators.");
             Thread.sleep(500);
             return false;
@@ -74,6 +74,12 @@ public class Validation{
              s = s.replaceAll(regexClosedBracket, "");
         } catch (Exception e) {
             //not a problem if no brackets so no error
+        }
+
+        if (s.equals("")){
+            System.err.println("Invalid expression - Requires a minimum of two operands with one operator between them.");
+            Thread.sleep(500);
+            return false;
         }
 
         ParseStringExpression.splitEquation(s, "+-*/^");
