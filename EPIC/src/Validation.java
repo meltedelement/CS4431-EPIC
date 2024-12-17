@@ -60,9 +60,8 @@ public class Validation{
     //method to check that there is at least two operands with at least 1 operator between
     private static boolean checkExpression(String s){
 
-        // skye thing cant deal with brackets ahhHhhHHhh
-        
-        //researched how to remove brackets from a string
+
+        //researched how to remove brackets from a string because skyes file doesnt handle brackets
         StringBuilder bracketlessString = new StringBuilder();
 
         //i have to for loop through string to remove brackets
