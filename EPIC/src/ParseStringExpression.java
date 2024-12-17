@@ -16,6 +16,8 @@ public abstract class ParseStringExpression {
 
     public static ArrayList<String> operators = new ArrayList<String>();
     public static ArrayList<Double> operands = new ArrayList<Double>();
+    // need to add some encapsulation stuff so will make these private then add getter methods.
+
 
     public static void splitEquation(String expression, String orderOfOperations) {
         operands.clear();

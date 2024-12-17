@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-//what needs to be checked: no letters, no symbols (other than operators), brackets are finished, 
+//what needs to be checked: no letters, no symbols (other than operators), brackets are finished, and minumum expression parameters, and valid expression for 1 more operand than operator
 
 public class Validation{
 
@@ -8,35 +8,38 @@ public class Validation{
     public static ArrayList<Character> operators = new ArrayList<>();
     public static char[] charOperators = {'+', '-', '*', '/', '^', ' ', '(',')','>','.'};
     
-    public static boolean isValid(String s) {
-        //&& logic only returns true if BOTH are true
+    //the throws InterruptedException is to allow use of Thread.sleep - (the exception is thrown if the Thread is interrupted WHEN sleeping) -- delay required as error printing is slower than printing, leading to an incorrect order in the terminal
+    public static boolean isValid(String s) throws InterruptedException {
+        //&& logic only returns true if ALL are true
         return checkCharacters(s) && checkBrackets(s) && checkExpression(s);
     }
    
-    //checks only digits(operands) and operators
-    private static boolean checkCharacters(String s){
-        //for loop each char of string, check if numbers, operator, else valid = false
-
+    //checks that only operands and operators
+    private static boolean checkCharacters(String s) throws InterruptedException{
+        //for eacch character in charOperators... add to array list
         for (char c : charOperators) {
             operators.add(c);
         }
 
-        int characterInvalid = 0; //only valid if = 0
+        int characterValid = 0; //only valid if = 0
     
+        //for loop each char of string, check if numbers, operator, else valid = false
         for (int i = 0; i < s.length(); i++){
             if (!(Character.isDigit(s.charAt(i)) || operators.contains(s.charAt(i)))){      
-                characterInvalid++;
+                characterValid++;
             } 
         }
 
-        if (characterInvalid != 0){
+        if (characterValid != 0){
+            System.err.println("Invalid character(s) in expression - Requires only intergers, decimals, and operators.");
+            Thread.sleep(500);
             return false;
         }
         return true;
     }
 
     //checks number of ( = number of )
-    private static boolean checkBrackets(String s){
+    private static boolean checkBrackets(String s) throws InterruptedException{
         int bracketsPairsBalanced = 0;
 
         for (int i = 0; i < s.length(); i++){
@@ -48,13 +51,15 @@ public class Validation{
         }
 
         if (bracketsPairsBalanced != 0){
+            System.err.println("Unbalanced brackets in expression - Requires a matching closing bracket for each open bracket.");
+            Thread.sleep(500);
             return false;
         } 
         return true;
     }
 
     //method to check that there is at least two operands with at least 1 operator between
-    private static boolean checkExpression(String s){
+    private static boolean checkExpression(String s) throws InterruptedException{
         //researched how to remove brackets and replace parts of strins with something else
         try {
              //replace )( with *
@@ -71,6 +76,12 @@ public class Validation{
             //not a problem if no brackets so no error
         }
 
+        if (s.equals("")){
+            System.err.println("Invalid expression - Requires a minimum of two operands with one operator between them.");
+            Thread.sleep(500);
+            return false;
+        }
+
         ParseStringExpression.splitEquation(s, "+-*/^");
         ArrayList<Double> skyeOperands = ParseStringExpression.operands;
         ArrayList<String> skyeOperators = ParseStringExpression.operators;
@@ -79,6 +90,8 @@ public class Validation{
 
         //change to with at least 1 opertaro 2 operands
         if (operandCounter != operatorCounter + 1 || operandCounter < 2 || operatorCounter < 1){
+            System.err.println("Invalid expression - Requires a minimum of two operands with one operator between them.");
+            Thread.sleep(500);
             return false;
         }
         return true;
