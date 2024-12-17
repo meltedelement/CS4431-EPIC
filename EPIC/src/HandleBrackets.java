@@ -1,6 +1,7 @@
 public class HandleBrackets {
     int openBracketLocation= 0;
     int closeBracketLocation = 0;
+    boolean bracketToMultiplyFlag = false;
 
     public String bracketSplitup(String expressionSplit){
         String[] splitup = expressionSplit.split("");
@@ -12,6 +13,9 @@ public class HandleBrackets {
             }
             else if (x.equals(")")){
                 closeBracketLocation = iterator;
+                if (expressionSplit.charAt(iterator + 1) ==  '('){
+                    bracketToMultiplyFlag = true;
+                }
                 break;
             }
         }
@@ -19,17 +23,23 @@ public class HandleBrackets {
         String sub = expressionSplit.substring(openBracketLocation, closeBracketLocation - 1);
         System.out.println("Now we work through the expression " + sub);
         String result = String.valueOf(ParseStringExpression.evaluate(sub));
-        expressionSplit = expressionSplit.replace("(" + sub + ")", " " + result + " ");
+        if (bracketToMultiplyFlag){
+            expressionSplit = expressionSplit.replace("(" + sub + ")", " " + result + " ");
+        }
+
+        else{
+            expressionSplit = expressionSplit.replace("(" + sub + ")", " " + result + " * ");
+        }
         System.out.println("Now our expression looks like this: " + expressionSplit);
         return expressionSplit;
     }
 
     public static void main(String[] args){
-        HandleBrackets appy = new HandleBrackets();
+        HandleBrackets handleBrackets = new HandleBrackets();
         String test = "(3 + 2)+(8 * 9)";
-        test = appy.bracketSplitup(test);
+        test = handleBrackets.bracketSplitup(test);
         while (test.contains("(")){
-            test = appy.bracketSplitup(test);
+            test = handleBrackets.bracketSplitup(test);
         }
         System.out.println(ParseStringExpression.evaluate(test));
     }
