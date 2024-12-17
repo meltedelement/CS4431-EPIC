@@ -16,10 +16,11 @@ public class App {
             }
         }
 
-
         String sub = expressionSplit.substring(openBracketLocation, closeBracketLocation - 1);
+        System.out.println("Now we work through the expression " + sub);
         String result = String.valueOf(ParseStringExpression.evaluate(sub));
-        expressionSplit = expressionSplit.replace("(" + sub + ")", result);
+        expressionSplit = expressionSplit.replace("(" + sub + ")", " " + result + " ");
+        System.out.println("Now our expression looks like this: " + expressionSplit);
         return expressionSplit;
     }
 

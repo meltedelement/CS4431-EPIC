@@ -11,20 +11,16 @@ Explanation for how this works:
    It also prints out the calculation that was performed to show order of operations working.
    When there are no more operators to apply, there will only be one operand in the list and that will be returned.
 */
-
-// EXAMPLE METHOD CALL:
-// double result = ParseStringExpression.evaluate("-15/3+2^3--7");
-
 import java.util.ArrayList;
-
 public abstract class ParseStringExpression {
 
-    private static ArrayList<String> operators = new ArrayList<String>();
-    private static ArrayList<Double> operands = new ArrayList<Double>();
+    public static ArrayList<String> operators = new ArrayList<String>();
+    public static ArrayList<Double> operands = new ArrayList<Double>();
 
-    private static void splitEquation(String expression, String orderOfOperations) {
+    public static void splitEquation(String expression, String orderOfOperations) {
+        operands.clear();
+        operators.clear();
         // This method splits the equation into a list of operators, and a list of operands.
-        // It is private because it should only be called from within this class, in evaluate.
 
         int operatorIndex = -1; // index of the start of an operand
 
@@ -52,30 +48,59 @@ public abstract class ParseStringExpression {
 
 
     public static double evaluate(String expression) {
-        operands.clear();
-        operators.clear();
         expression = expression.replaceAll("\\s",""); // remove all whitespace
-        operands.clear();
         // This is the main method takes an input string expression without brackets and evaluates it.
-        String orderOfOperations = "^*/+-"; // Can be changed for additional operators
-        splitEquation(expression, orderOfOperations);
-        if (operators.size() + 1 != operands.size()) {
-            System.out.println("Error evaluating expression, disallowed sets of operands and operators...");
+        String[] orderOfOperations = {"^", "*/", "+-"}; // Can be changed for additional operators
+
+        splitEquation(expression, String.join("", orderOfOperations));
+        try {
+            assert operators.size() + 1 == operands.size(): "Mismatched sets of operands and operators...";
+        } catch (AssertionError e) {
+            System.out.println(e.getMessage());
         }
         // loop through each operator in order of importance
-        for (int i=0; i<orderOfOperations.length(); i++) {
-            String operator = String.valueOf(orderOfOperations.charAt(i));
+        for (int i=0; i<orderOfOperations.length; i++) {
+            String precedence = orderOfOperations[i];
 
-            // while the list of operators contains the one we're checking
-            while (operators.contains(operator)) {
-                int index = operators.indexOf(operator);
-                double result = Calculate.calc(operator, operands.get(index), operands.get(index+1));
-                operands.remove(index);
-                // when you remove the first operand, the second one is now at the original index
-                operands.set(index, result); // replace second operand with result variable
-                operators.remove(operator);
+            if (precedence.length() == 1) {
+                String thisOperator = String.valueOf(precedence.charAt(0));
+                // while the list of operators contains the one we're checking
+                while (operators.contains(thisOperator)) {
+                    int index = operators.indexOf(thisOperator);
+                    double result = Calculator.calc(thisOperator, operands.get(index), operands.get(index+1));
+                    operands.remove(index);
+                    // when you remove the first operand, the second one is now at the original index
+                    operands.set(index, result); // replace second operand with result variable
+                    operators.remove(thisOperator);
+                }
+            } else if (precedence.length() == 2) {
+                String firstOperator = String.valueOf(precedence.charAt(0));
+                String secondOperator = String.valueOf(precedence.charAt(1));
+
+                while (operators.contains(firstOperator) || operators.contains(secondOperator)) {
+                    int in1 = operators.indexOf(firstOperator);
+                    int in2 = operators.indexOf(secondOperator);
+                    if (in2==-1 || (in1 < in2 && in1!=-1) ) {
+                        // if the first operator is before the second one when read left to right
+
+                        int index = operators.indexOf(firstOperator);
+                        double result = Calculator.calc(firstOperator, operands.get(index), operands.get(index+1));
+                        operands.remove(index);
+                        // when you remove the first operand, the second one is now at the original index
+                        operands.set(index, result); // replace second operand with result variable
+                        operators.remove(firstOperator);
+                    } else {
+                        int index = operators.indexOf(secondOperator);
+                        double result = Calculator.calc(secondOperator, operands.get(index), operands.get(index+1));
+                        operands.remove(index);
+                        // when you remove the first operand, the second one is now at the original index
+                        operands.set(index, result); // replace second operand with result variable
+                        operators.remove(secondOperator);
+                    }
+                }
             }
         }
         return operands.get(0);
     }
+
 }
