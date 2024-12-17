@@ -30,9 +30,10 @@ public class Validation{
         }
 
         if (characterInvalid != 0){
+            System.out.println("Returning false for checkCharacters validity");
             return false;
         }
-
+        System.out.println("Returning true for checkCharacters validity");
         return true;
     }
 
@@ -49,8 +50,10 @@ public class Validation{
         }
 
         if (bracketsPairsBalanced != 0){
+            System.out.println("Returning false for checkBrackets validity");
             return false;
         } 
+        System.out.println("Returning true for checkBrackets validity");
         return true;
     }
 
@@ -64,23 +67,35 @@ public class Validation{
 
         //i have to for loop through string to remove brackets
         for (int i = 0; i < s.length(); i++){
+
             if(s.charAt(i) != '(' && s.charAt(i) != ')'){
                 //.append = add, so, if the char is not a bracket, it will be added to bracketlessString.
+                System.out.println("adding the number");
                 bracketlessString.append(s.charAt(i));
+            }
+
+            //if ")(", then replace with a "*"
+            if(i < (s.length() - 1) && (s.charAt(i) == ')' || s.charAt(i+1) == '(')){
+                System.out.println("adding the multiply thing");
+                bracketlessString.append("*");
             }
         }
 
         s = bracketlessString.toString();
 
-        ParseStringExpression.splitEquation(s, "+-*/^");
+        ParseStringExpression.splitEquation(s, "+-*/");
         ArrayList<Double> skyeOperands = ParseStringExpression.operands;
         ArrayList<String> skyeOperators = ParseStringExpression.operators;
         int operatorCounter = skyeOperators.size();
         int operandCounter = skyeOperands.size();
 
-        if (operandCounter != operatorCounter + 1){
+        System.out.println(s + " " + skyeOperands + " " + skyeOperators);
+        //change to with at least 1 opertaro 2 operands
+        if (operandCounter != operatorCounter + 1 || operandCounter < 2 || operatorCounter < 1){
+            System.out.println("Returning false for checkExpression validity");
             return false;
         }
+        System.out.println("Returning true for checkExpression validity");
         return true;
     }
 }
