@@ -39,9 +39,9 @@ public class Validation{
         }
         return true;
     }
-
-    //checks number of ( = number of )
+    
     private static boolean checkBrackets(String s) throws InterruptedException{
+        //checks number of ( = number of )
         int bracketsPairsBalanced = 0;
 
         for (int i = 0; i < s.length(); i++){
@@ -58,27 +58,31 @@ public class Validation{
             return false;
         } 
 
+        //checking bracket positions/combinations
         //fill array list bracketList with brackets from exoression
         for(int i = 0; i < s.length(); i++){
             if (s.charAt(i) == '(' || s.charAt(i) == ')'){
                 bracketList.add(s.charAt(i));
             }
         }
+    
+        try {
+            //if first bracket is ), invalid
+            if(bracketList.getFirst() == ')'){
+                System.err.println("Invalid brackets in expression - Expression cannot begin with a closed bracket.");
+                Thread.sleep(500);
+                return false;
+            }
+            //if last bracket is (, invalid
+            if(bracketList.getLast() == '('){
+                System.err.println("Invalid brackets in expression - Expression cannot end with an open bracket.");
+                Thread.sleep(500);
+                return false;
+            }
+        }
+        //handling isnt necessary as a bracketless expression isnt a problem
+        catch (Exception e) {}
         
-        //if first bracket is ), invalid
-        if(bracketList.getFirst() == ')'){
-            System.err.println("Invalid brackets in expression - Expression cannot begin with a closed bracket.");
-            Thread.sleep(500);
-            return false;
-        }
-
-        //if last bracket is (, invalid
-        if(bracketList.getFirst() == '('){
-            System.err.println("Invalid brackets in expression - Expression cannot end with an open bracket.");
-            Thread.sleep(500);
-            return false;
-        }
-
         //if empty brackets, invalid
         if (s.contains("()")){
             System.err.println("Invalid brackets in expression - No empty brackets permitted.");
