@@ -7,7 +7,7 @@ public class Menu {
         System.out.print("\033\143");
     }
 
-    public static void runCalculator(Scanner input) {
+    public static void runCalculator(Scanner input) throws InterruptedException {
         System.out.print("Please enter an expression to be evaluated: ");
         String str = input.nextLine();
         while (!Validation.isValid(str)) {
