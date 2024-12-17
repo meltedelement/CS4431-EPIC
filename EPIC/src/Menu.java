@@ -32,7 +32,7 @@ public class Menu {
         System.out.println("\t   \\ \\_______\\    \\ \\_______\\    \\ \\_______\\       \\|__|   ");
         System.out.println("\t    \\|_______|     \\|_______|     \\|_______|           ___ ");
         System.out.println("\t                                                      |\\__\\");
-        System.out.println("\t  Welcome to the Order of Operations (OOO!) Calculator    \\|__|\n");
+        System.out.println("  Welcome to the Order of Operations (OOO!) Calculator    \\|__|\n");
 
         while (true) {
             Scanner input = new Scanner(System.in);
