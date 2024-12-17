@@ -4,16 +4,18 @@ import java.util.ArrayList;
 
 public class Validation{
 
-    //array list of operators - used in checkCharacters & checkExpression
+    //array list of operators - used in checkCharacters & checkExpression, and list of expression's brackets
     public static ArrayList<Character> operators = new ArrayList<>();
     public static char[] charOperators = {'+', '-', '*', '/', '^', ' ', '(',')','>','.'};
+    public static ArrayList<Character> bracketList = new ArrayList<>();
+
     
     //the throws InterruptedException is to allow use of Thread.sleep - (the exception is thrown if the Thread is interrupted WHEN sleeping) -- delay required as error printing is slower than printing, leading to an incorrect order in the terminal
     public static boolean isValid(String s) throws InterruptedException {
         //&& logic only returns true if ALL are true
         return checkCharacters(s) && checkBrackets(s) && checkExpression(s);
     }
-   
+
     //checks that only operands and operators
     private static boolean checkCharacters(String s) throws InterruptedException{
         //for eacch character in charOperators... add to array list
@@ -31,7 +33,7 @@ public class Validation{
         }
 
         if (characterValid != 0){
-            System.err.println("Invalid character(s) in expression - Requires only intergers, decimals, and operators.");
+            System.err.println("Invalid character(s) in expression - Requires only intergers, decimals, brackets and operators.");
             Thread.sleep(500);
             return false;
         }
@@ -55,11 +57,40 @@ public class Validation{
             Thread.sleep(500);
             return false;
         } 
+
+        //fill array list bracketList with brackets from exoression
+        for(int i = 0; i < s.length(); i++){
+            if (s.charAt(i) == '(' || s.charAt(i) == ')'){
+                bracketList.add(s.charAt(i));
+            }
+        }
+        
+        //if first bracket is ), invalid
+        if(bracketList.getFirst() == ')'){
+            System.err.println("Invalid brackets in expression - Expression cannot begin with a closed bracket.");
+            Thread.sleep(500);
+            return false;
+        }
+
+        //if last bracket is (, invalid
+        if(bracketList.getFirst() == '('){
+            System.err.println("Invalid brackets in expression - Expression cannot end with an open bracket.");
+            Thread.sleep(500);
+            return false;
+        }
+
+        //if empty brackets, invalid
+        if (s.contains("()")){
+            System.err.println("Invalid brackets in expression - No empty brackets permitted.");
+            Thread.sleep(500);
+            return false;
+        }
         return true;
     }
 
     //method to check that there is at least two operands with at least 1 operator between
     private static boolean checkExpression(String s) throws InterruptedException{
+        
         //researched how to remove brackets and replace parts of strins with something else
         try {
              //replace )( with *
