@@ -64,20 +64,25 @@ public class Validation{
                 bracketList.add(s.charAt(i));
             }
         }
-        
-        //if first bracket is ), invalid
-        if(bracketList.getFirst() == ')'){
-            System.err.println("Invalid brackets in expression - Expression cannot begin with a closed bracket.");
-            Thread.sleep(500);
-            return false;
-        }
+    
+        try {
+            //if first bracket is ), invalid
+            if(bracketList.getFirst() == ')'){
+                System.err.println("Invalid brackets in expression - Expression cannot begin with a closed bracket.");
+                Thread.sleep(500);
+                return false;
+            }
 
-        //if last bracket is (, invalid
-        if(bracketList.getFirst() == '('){
-            System.err.println("Invalid brackets in expression - Expression cannot end with an open bracket.");
-            Thread.sleep(500);
-            return false;
+            //if last bracket is (, invalid
+            if(bracketList.getFirst() == '('){
+                System.err.println("Invalid brackets in expression - Expression cannot end with an open bracket.");
+                Thread.sleep(500);
+                return false;
+            }
+        } catch (Exception e) {
+            //handling isnt necessary as a bracketless expression isnt a problem
         }
+        
 
         //if empty brackets, invalid
         if (s.contains("()")){
