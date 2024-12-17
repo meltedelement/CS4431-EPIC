@@ -1,4 +1,4 @@
-public class App {
+public class HandleBrackets {
     int openBracketLocation= 0;
     int closeBracketLocation = 0;
 
@@ -25,7 +25,7 @@ public class App {
     }
 
     public static void main(String[] args){
-        App appy = new App();
+        HandleBrackets appy = new HandleBrackets();
         String test = "(3 + 2)+(8 * 9)";
         test = appy.bracketSplitup(test);
         while (test.contains("(")){
