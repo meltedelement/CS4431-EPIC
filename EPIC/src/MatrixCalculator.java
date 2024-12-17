@@ -66,7 +66,7 @@ public class MatrixCalculator {
         System.out.println("3. Multiplication");
         System.out.println("4. Matrix1^2");
         System.out.println("5. Matrix2^2");
-
+try{
         int choice = input.nextInt(); // exception
 
         switch (choice) {
@@ -121,6 +121,14 @@ public class MatrixCalculator {
                 System.out.println("Invalid choice.");
                 Thread.sleep(1000);
                 clearScreen();
+        }
+        }catch(InputMismatchException e){
+    System.out.println("Please enter a valid number from 1-5");
+    input.next();
+} catch (IllegalArgumentException e) {
+    System.out.println("Error: " + e.getMessage());
+} catch (Exception e) {
+    System.out.println("An unexpected error occurred: " + e.getMessage());
         }
     }
 
