@@ -24,16 +24,14 @@ public class Validation{
         int characterInvalid = 0; //only valid if = 0
     
         for (int i = 0; i < s.length(); i++){
-            if (!(Character.isDigit(s.charAt(i)) || operators.contains(s.charAt(i)))){      //should this be || or && ?
+            if (!(Character.isDigit(s.charAt(i)) || operators.contains(s.charAt(i)))){      
                 characterInvalid++;
             } 
         }
 
         if (characterInvalid != 0){
-            System.out.println("Returning false for checkCharacters validity");
             return false;
         }
-        System.out.println("Returning true for checkCharacters validity");
         return true;
     }
 
@@ -50,51 +48,39 @@ public class Validation{
         }
 
         if (bracketsPairsBalanced != 0){
-            System.out.println("Returning false for checkBrackets validity");
             return false;
         } 
-        System.out.println("Returning true for checkBrackets validity");
         return true;
     }
 
     //method to check that there is at least two operands with at least 1 operator between
     private static boolean checkExpression(String s){
-
-
-        //researched how to remove brackets from a string because skyes file doesnt handle brackets
-        StringBuilder bracketlessString = new StringBuilder();
-
-        //i have to for loop through string to remove brackets
-        for (int i = 0; i < s.length(); i++){
-
-            if(s.charAt(i) != '(' && s.charAt(i) != ')'){
-                //.append = add, so, if the char is not a bracket, it will be added to bracketlessString.
-                System.out.println("adding the number");
-                bracketlessString.append(s.charAt(i));
-            }
-
-            //if ")(", then replace with a "*"
-            if(i < (s.length() - 1) && (s.charAt(i) == ')' || s.charAt(i+1) == '(')){
-                System.out.println("adding the multiply thing");
-                bracketlessString.append("*");
-            }
+        //researched how to remove brackets and replace parts of strins with something else
+        try {
+             //replace )( with *
+             String regexMultiply = "\\)\\(";
+             s = s.replaceAll(regexMultiply, "*");
+ 
+             //replace ( and ) with blanks
+             String regexOpenBracket = "\\(";
+             s = s.replaceAll(regexOpenBracket, "");
+         
+             String regexClosedBracket = "\\)";
+             s = s.replaceAll(regexClosedBracket, "");
+        } catch (Exception e) {
+            //not a problem if no brackets so no error
         }
 
-        s = bracketlessString.toString();
-
-        ParseStringExpression.splitEquation(s, "+-*/");
+        ParseStringExpression.splitEquation(s, "+-*/^");
         ArrayList<Double> skyeOperands = ParseStringExpression.operands;
         ArrayList<String> skyeOperators = ParseStringExpression.operators;
         int operatorCounter = skyeOperators.size();
         int operandCounter = skyeOperands.size();
 
-        System.out.println(s + " " + skyeOperands + " " + skyeOperators);
         //change to with at least 1 opertaro 2 operands
         if (operandCounter != operatorCounter + 1 || operandCounter < 2 || operatorCounter < 1){
-            System.out.println("Returning false for checkExpression validity");
             return false;
         }
-        System.out.println("Returning true for checkExpression validity");
         return true;
     }
 }
@@ -111,6 +97,7 @@ if (!Validation.isValid(userIn)){
 
 */
 
+// GRAVEYARD
 
 //original checkExpression()
 //this is incredibly flawed as it cannot deal with negative numbers (double operators)
@@ -129,3 +116,32 @@ if (!Validation.isValid(userIn)){
         //     return true;
         // }
         // return false;
+
+ // // attempts to change )( to *:
+
+            // if((i < s.length() - 1 && s.charAt(i) == ')') || (i < (s.length() - 1) && s.charAt(i+1) == '(')){
+            //     System.out.println("adding the multiply thing");
+            //     bracketlessString.append("*");
+            //}
+
+            // //if ")(", then replace with a "*"
+            // try {
+            //     if( s.charAt(i) == ')' && s.charAt(i+1) == '('){
+            //         System.out.println("adding the multiply thing");
+            //         bracketlessString.append('*');
+            //     }
+            //  } catch (IndexOutOfBoundsException e) {
+            //      // TODO: handle exception
+            //  }
+
+            // for (int i = 0; i < s.length(); i++){
+
+        //     //researched how to remove brackets from a string because skyes file doesnt handle brackets - decided to use stringbuilder
+        // StringBuilder bracketlessString = new StringBuilder();
+            
+            //     if(s.charAt(i) != '(' && s.charAt(i) != ')'){
+            //         //.append = add, so, if the char is not a bracket, it will be added to bracketlessString.
+            //         System.out.println("adding the number");
+            //         bracketlessString.append(s.charAt(i));
+            //     }
+            // }
