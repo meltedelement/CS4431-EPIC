@@ -17,15 +17,15 @@ public class MatrixCalculator {
             Thread.sleep(500);
         }
 
-        int rows = 0, cols = 0;
+        int rows1 = 0, cols1 = 0;
         boolean validInput = false;
 
         // Input number of rows with exception handling
         while (validInput == false) {
             try {
                 System.out.print("Enter the number of rows for the matrices: ");
-                rows = input.nextInt();
-                if (rows <= 0) {
+                rows1 = input.nextInt();
+                if (rows1 <= 0) {
                     System.out.println("Number of rows must be positive.");
                     continue;
                 }
@@ -42,8 +42,8 @@ public class MatrixCalculator {
         while (validInput == false) {
             try {
                 System.out.print("Enter the number of columns for the matrices: ");
-                cols = input.nextInt();
-                if (cols <= 0) {
+                cols1 = input.nextInt();
+                if (cols1 <= 0) {
                     System.out.println("Number of columns must be positive.");
                     continue;
                 }
@@ -55,10 +55,10 @@ public class MatrixCalculator {
         }
 
         System.out.println("Enter elements of Matrix 1:");
-        int[][] matrix1 = readMatrix(input, rows, cols);
+        int[][] matrix1 = readMatrix(input, rows1, cols1);
 
         System.out.println("Enter elements of Matrix 2:");
-        int[][] matrix2 = readMatrix(input, rows, cols);
+        int[][] matrix2 = readMatrix(input, rows1, cols1);
 
         System.out.println("Choose an operation: ");
         System.out.println("1. Addition");
@@ -83,14 +83,14 @@ try{
             case 3:
 
                 System.out.println("Result of Multiplication:");
-                printMatrix(multiplyMatrices(matrix1, matrix2, rows, cols));
+                printMatrix(multiplyMatrices(matrix1, matrix2, rows1, cols1));
                 break;
             case 4:
                 System.out.println("Result of Squaring Matrix1");
-                printMatrix(squareMatrix(matrix1, rows, cols));
+                printMatrix(squareMatrix(matrix1, rows1, cols1));
                 break;
             case 5:
-                printMatrix(squareMatrix(matrix2, rows, cols));
+                printMatrix(squareMatrix(matrix2, rows1, cols1));
                 break;
             default:
 
@@ -173,24 +173,30 @@ try{
     }
 
     public static int[][] multiplyMatrices(int[][] matrix1, int[][] matrix2, int rows, int cols) {
-        System.out.println("Matrix multiplication involves taking the " +
-                "dot product of rows from the first matrix " +
-                "with columns from the second matrix, " +
-                "summing the products, \nand placing " +
-                "the result in the corresponding position " +
-                "of the resulting matrix.");
-        int[][] result = new int[rows][cols];
+        int rows1 = matrix1.length; // Number of rows in Matrix 1
+        int cols1 = matrix1[0].length; // Number of columns in Matrix 1
+        int rows2 = matrix2.length; // Number of rows in Matrix 2
+        int cols2 = matrix2[0].length; // Number of columns in Matrix 2
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                result[i][j] = 0;
-                for (int k = 0; k < cols; k++) {
+        if (cols1 != rows2) {
+            throw new IllegalArgumentException("Matrix multiplication is not possible. "
+                    + "The number of columns in the first matrix must equal "
+                    + "the number of rows in the second matrix.");
+        }
+
+        int[][] result = new int[rows1][cols2]; // Resulting matrix dimensions
+
+        for (int i = 0; i < rows1; i++) {
+            for (int j = 0; j < cols2; j++) {
+                result[i][j] = 0; // Initialize element
+                for (int k = 0; k < cols1; k++) {
                     result[i][j] += matrix1[i][k] * matrix2[k][j];
                 }
             }
         }
         return result;
     }
+
 
     public static int[][] squareMatrix(int[][] matrix1, int rows, int cols) {
         System.out.println("Matrix squaring involves multiplying a matrix by itself, " +
