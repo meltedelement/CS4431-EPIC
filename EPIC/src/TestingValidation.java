@@ -1,6 +1,6 @@
 public class TestingValidation {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         // test cases where validation is wrong
         System.out.println(": " + Validation.isValid("")); // false and wont run
