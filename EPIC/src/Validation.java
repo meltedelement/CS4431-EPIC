@@ -5,11 +5,10 @@ import java.util.ArrayList;
 public class Validation{
 
     //array list of operators - used in checkCharacters & checkExpression, and list of expression's brackets
-    public static ArrayList<Character> operators = new ArrayList<>();
     public static char[] charOperators = {'+', '-', '*', '/', '^', ' ', '(',')','>','.'};
+    public static ArrayList<Character> operators = new ArrayList<>();
     public static ArrayList<Character> bracketList = new ArrayList<>();
 
-    
     //the throws InterruptedException is to allow use of Thread.sleep - (the exception is thrown if the Thread is interrupted WHEN sleeping) -- delay required as error printing is slower than printing, leading to an incorrect order in the terminal
     public static boolean isValid(String s) throws InterruptedException {
         //&& logic only returns true if ALL are true
@@ -19,21 +18,22 @@ public class Validation{
     //checks that only operands and operators
     private static boolean checkCharacters(String s) throws InterruptedException{
         //for eacch character in charOperators... add to array list
+        //array list is easier than array (using .contains)
         for (char c : charOperators) {
             operators.add(c);
         }
 
-        int characterValid = 0; //only valid if = 0
+        boolean characterValid = true;
     
         //for loop each char of string, check if numbers, operator, else valid = false
         for (int i = 0; i < s.length(); i++){
             if (!(Character.isDigit(s.charAt(i)) || operators.contains(s.charAt(i)))){      
-                characterValid++;
+                characterValid = false;
             } 
         }
 
-        if (characterValid != 0){
-            System.err.println("Invalid character(s) in expression - Requires only intergers, decimals, brackets and operators.");
+        if (!characterValid){
+            System.err.println("Invalid character(s) in expression - Only intergers, decimals, brackets and operators permitted");
             Thread.sleep(500);
             return false;
         }
@@ -69,13 +69,13 @@ public class Validation{
         try {
             //if first bracket is ), invalid
             if(bracketList.getFirst() == ')'){
-                System.err.println("Invalid brackets in expression - Expression cannot begin with a closed bracket.");
+                System.err.println("Invalid brackets in expression.");
                 Thread.sleep(500);
                 return false;
             }
             //if last bracket is (, invalid
             if(bracketList.getLast() == '('){
-                System.err.println("Invalid brackets in expression - Expression cannot end with an open bracket.");
+                System.err.println("Invalid brackets in expression.");
                 Thread.sleep(500);
                 return false;
             }
@@ -95,6 +95,13 @@ public class Validation{
     //method to check that there is at least two operands with at least 1 operator between
     private static boolean checkExpression(String s) throws InterruptedException{
         
+        if (s.equals("")){
+            System.err.println("Invalid expression - Requires a minimum of two operands with one operator between them.");
+            Thread.sleep(500);
+            return false;
+        }
+
+        //to use ParseStringExpression, i have to remove brackets, but also consider )( as *
         //researched how to remove brackets and replace parts of strins with something else
         try {
              //replace )( with *
@@ -111,11 +118,7 @@ public class Validation{
             //not a problem if no brackets so no error
         }
 
-        if (s.equals("")){
-            System.err.println("Invalid expression - Requires a minimum of two operands with one operator between them.");
-            Thread.sleep(500);
-            return false;
-        }
+        //new problem: skyes stuff doesnt like me. 
 
         ParseStringExpression.splitEquation(s, "+-*/^");
         ArrayList<Double> skyeOperands = ParseStringExpression.operands;
