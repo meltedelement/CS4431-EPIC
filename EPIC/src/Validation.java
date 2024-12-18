@@ -160,12 +160,13 @@ public class Validation{
                 operatorCounter++;
                 readingOperand = false;
                 //adds to operator counter
+                //reading operand false
             //if character at i is an operand & its not already reading a long operand
-            } else if (Character.isDigit(s.charAt(i))) {
-                if (!readingOperand) {
-                    operandCounter++;
-                    readingOperand = true;
-                }
+            } else if (Character.isDigit(s.charAt(i)) && !readingOperand) {
+                operandCounter++;
+                readingOperand = true;
+                //adds to operand counter
+                //reading operand true
             }
         }
 
