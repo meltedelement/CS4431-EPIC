@@ -31,7 +31,8 @@ public class HandleBrackets {
         System.out.println("Now we work through the expression " + sub);
         String result = String.valueOf(ParseStringExpression.evaluate(sub));
         if (bracketToMultiplyFlag){
-            expressionSplit = expressionSplit.replace("(" + sub + ")", " " + result + " * ");
+            expressionSplit = expressionSplit.substring(0, openBracketLocation-1) + " " + result + "*"
+                    + expressionSplit.substring(closeBracketLocation);
             bracketToMultiplyFlag = false;
         }
 
