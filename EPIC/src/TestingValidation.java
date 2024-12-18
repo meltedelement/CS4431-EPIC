@@ -7,13 +7,19 @@ public class TestingValidation {
         System.out.println("5/0: " + Validation.isValid("5/0")); // false but division by zero error is handled elsewhere
         System.out.println("5/(3-3): " + Validation.isValid("5/(3-3)")); // false but division by zero error is handled elsewhere
 
-        //System.out.println("2+++2: " + Validation.isValid("2+++2")); // false but completely fucked
-        //System.out.println("(4+))((1): " + Validation.isValid("(4+))((1)")); // false but completely fucked
+        // holly problems
+        System.out.println("-2--2: " + Validation.isValid("-2--2")); // true but says false
+        System.out.println("456*-2--4: " + Validation.isValid("456*-2--4")); // true but says false
+        System.out.println("2+++2: " + Validation.isValid("2+++2")); // false but says false for the wrong reasons
+        System.out.println("(4+))((1): " + Validation.isValid("(4+))((1)")); // false but says false for the wrong reasons
+        System.out.println("3^2*2-12^-(1/2): " + Validation.isValid("3^2*2-12^-(1/2)")); // true but says false
+
 
         System.out.println(": " + Validation.isValid("")); // false
         System.out.println("4: " + Validation.isValid("4")); // false
         System.out.println("(): " + Validation.isValid("()")); // false
         System.out.println("((): " + Validation.isValid("(()")); // false
+        System.out.println("2+++2: " + Validation.isValid("2+++2")); // false
         System.out.println("2.2*5: " + Validation.isValid("2.2*5")); // true
         System.out.println("=2/3+2: " + Validation.isValid("=2/3+2")); // false
         System.out.println("{5*12}: " + Validation.isValid("{5*12}")); // false
@@ -23,7 +29,6 @@ public class TestingValidation {
         System.out.println("(4+5)()/2: " + Validation.isValid("(4+5)()/2")); // false
         System.out.println("2*/*-+()2: " + Validation.isValid("2*/*-+()2")); // false
         System.out.println("))3(15)+-4(((): " + Validation.isValid("))3(15)+-4((()")); // false
-        System.out.println("3^2*2-12^-(1/2): " + Validation.isValid("3^2*2-12^-(1/2)")); // true
         System.out.println("1.324654353+ 5645767657: " + Validation.isValid("1.324654353+ 5645767657")); // true
     }
 }
