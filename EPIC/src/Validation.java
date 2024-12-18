@@ -1,17 +1,13 @@
 import java.util.ArrayList;
-// import java.util.Arrays;
-// import java.util.HashSet;
-// import java.util.Set;
 
 //what needs to be checked: no letters, no symbols (other than operators), brackets are finished, and minumum expression parameters, and valid expression for 1 more operand than operator
 
 public class Validation{
 
-    //array list of operators - used in checkCharacters & checkExpression, and list of expression's brackets
-    public static char[] charOperators = {'+', '-', '*', '/', '^', ' ', '(',')','>','.'};
-    public static char[] numericalChars = {'+', '-', '*', '/', '^'};
+    public static char[] validSymbols = {'+', '-', '*', '/', '^', ' ', '(',')','>','.'};
+    public static char[] validOperators = {'+', '-', '*', '/', '^'};
+    public static ArrayList<Character> symbols = new ArrayList<>();
     public static ArrayList<Character> operators = new ArrayList<>();
-    public static ArrayList<Character> numericalOperators = new ArrayList<>();
     public static ArrayList<Character> bracketList = new ArrayList<>();
 
     //the throws InterruptedException is to allow use of Thread.sleep - (the exception is thrown if the Thread is interrupted WHEN sleeping) -- delay required as error printing is slower than printing, leading to an incorrect order in the terminal
@@ -20,24 +16,19 @@ public class Validation{
         return checkCharacters(s) && checkBrackets(s) && checkExpression(s) && checkAdjacentOperators(s);
     }
 
-   
     //checks that only operands and operators
     private static boolean checkCharacters(String s) throws InterruptedException{
-        //for eacch character in charOperators... add to array list
-        //array list is easier than array (using .contains)
-        for (char c : charOperators) {
-            operators.add(c);
-        }
 
-        for (char c : numericalChars) {
-            numericalOperators.add(c);
+        //instantiate symbols
+        for (char c : validSymbols) {
+            symbols.add(c);
         }
 
         boolean characterValid = true;
     
         //for loop each char of string, check if numbers, operator, else valid = false
         for (int i = 0; i < s.length(); i++){
-            if (!(Character.isDigit(s.charAt(i)) || operators.contains(s.charAt(i)))){      
+            if (!(Character.isDigit(s.charAt(i)) || symbols.contains(s.charAt(i)))){      
                 characterValid = false;
             } 
         }
@@ -105,6 +96,7 @@ public class Validation{
     //method to check that there is at least two operands with at least 1 operator between
     private static boolean checkExpression(String s) throws InterruptedException{
         
+        
         if (s.equals("")){
             System.err.println("Invalid expression - Requires a minimum of two operands with one operator between them.");
             Thread.sleep(500);
@@ -160,6 +152,12 @@ public class Validation{
     }
 
     private static boolean checkAdjacentOperators(String s) throws InterruptedException{
+
+        //initiate operators
+        for (char c : validOperators) {
+            operators.add(c);
+        }
+
         int minusCounter = 0;
 
         for (int i = 1; i < s.length(); i++){
@@ -172,7 +170,7 @@ public class Validation{
                 minusCounter = 0;
             }
 
-            if (numericalOperators.contains(previousChar) && numericalOperators.contains(currentChar) && currentChar != '-' ) {
+            if (operators.contains(previousChar) && operators.contains(currentChar) && currentChar != '-' ) {
                 System.err.println("Invalid expression - Too many adjacent operators.");
                 Thread.sleep(500);
                 return false;
