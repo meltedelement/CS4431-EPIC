@@ -9,8 +9,9 @@ public class Validation{
 
     //array list of operators - used in checkCharacters & checkExpression, and list of expression's brackets
     public static char[] charOperators = {'+', '-', '*', '/', '^', ' ', '(',')','>','.'};
-    //public static Set<Character> charOperatorSet = new HashSet<>(Arrays.asList('+', '-', '*', '/', '^', ' ', '(', ')', '>', '.'));
+    public static char[] numericalChars = {'+', '-', '*', '/', '^'};
     public static ArrayList<Character> operators = new ArrayList<>();
+    public static ArrayList<Character> numericalOperators = new ArrayList<>();
     public static ArrayList<Character> bracketList = new ArrayList<>();
 
     //the throws InterruptedException is to allow use of Thread.sleep - (the exception is thrown if the Thread is interrupted WHEN sleeping) -- delay required as error printing is slower than printing, leading to an incorrect order in the terminal
@@ -26,6 +27,10 @@ public class Validation{
         //array list is easier than array (using .contains)
         for (char c : charOperators) {
             operators.add(c);
+        }
+
+        for (char c : numericalChars) {
+            numericalOperators.add(c);
         }
 
         boolean characterValid = true;
@@ -167,7 +172,7 @@ public class Validation{
                 minusCounter = 0;
             }
 
-            if (operators.contains(previousChar) && operators.contains(currentChar) && currentChar != '-' ) {
+            if (numericalOperators.contains(previousChar) && numericalOperators.contains(currentChar) && currentChar != '-' ) {
                 System.err.println("Invalid expression - Too many adjacent operators.");
                 Thread.sleep(500);
                 return false;
