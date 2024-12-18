@@ -41,11 +41,11 @@ public class HandleBrackets {
     }
     
     public static void main(String[] args){
-        HandleBrackets handleBrackets = new HandleBrackets();
+        HandleBrackets appy = new HandleBrackets();
         String test = "(3 + 2)(8 * 9)";
-        test = handleBrackets.bracketSplitup(test);
+        test = appy.bracketSplitup(test);
         while (test.contains("(")){
-            test = handleBrackets.bracketSplitup(test);
+            test = appy.bracketSplitup(test);
         }
         System.out.println(ParseStringExpression.evaluate(test));
     }
