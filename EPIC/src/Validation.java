@@ -1,7 +1,7 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+// import java.util.Arrays;
+// import java.util.HashSet;
+// import java.util.Set;
 
 //what needs to be checked: no letters, no symbols (other than operators), brackets are finished, and minumum expression parameters, and valid expression for 1 more operand than operator
 
