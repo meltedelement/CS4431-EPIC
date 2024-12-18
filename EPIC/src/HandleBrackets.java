@@ -15,6 +15,8 @@ public class HandleBrackets {
                 closeBracketLocation = iterator;
 
                     if ( iterator != splitup.length && expressionSplit.charAt(iterator) ==  '('){
+                        System.out.print("me when");
+
                         bracketToMultiplyFlag = true;
                     }
                 
@@ -29,7 +31,8 @@ public class HandleBrackets {
         System.out.println("Now we work through the expression " + sub);
         String result = String.valueOf(ParseStringExpression.evaluate(sub));
         if (bracketToMultiplyFlag){
-            expressionSplit = expressionSplit.replace("(" + sub + ")", " " + result + " * ");
+            expressionSplit = expressionSplit.substring(0, openBracketLocation-1) + " " + result + "*"
+                    + expressionSplit.substring(closeBracketLocation);
             bracketToMultiplyFlag = false;
         }
 
@@ -41,12 +44,13 @@ public class HandleBrackets {
     }
     
     public static void main(String[] args){
-        HandleBrackets handleBrackets = new HandleBrackets();
-        String test = "(3 + 2)(8 * 9)";
-        test = handleBrackets.bracketSplitup(test);
+        HandleBrackets appy = new HandleBrackets();
+        String test = "(1)(2)(1)";
+        test = appy.bracketSplitup(test);
         while (test.contains("(")){
-            test = handleBrackets.bracketSplitup(test);
+            test = appy.bracketSplitup(test);
         }
+        System.out.println("Before sending to skyes ting: " + test);
         System.out.println(ParseStringExpression.evaluate(test));
     }
 }

@@ -1,63 +1,34 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 //what needs to be checked: no letters, no symbols (other than operators), brackets are finished, and minumum expression parameters, and valid expression for 1 more operand than operator
 
 public class Validation{
 
-    //array list of operators - used in checkCharacters & checkExpression, and list of expression's brackets
-    public static char[] charOperators = {'+', '-', '*', '/', '^', ' ', '(',')','>','.'};
-    public static Set<Character> charOperatorSet = new HashSet<>(Arrays.asList('+', '-', '*', '/', '^', ' ', '(', ')', '>', '.'));
+    public static char[] validSymbols = {'+', '-', '*', '/', '^', ' ', '(',')','>','.'};
+    public static char[] validOperators = {'+', '-', '*', '/', '^'};
+    public static ArrayList<Character> symbols = new ArrayList<>();
     public static ArrayList<Character> operators = new ArrayList<>();
     public static ArrayList<Character> bracketList = new ArrayList<>();
 
     //the throws InterruptedException is to allow use of Thread.sleep - (the exception is thrown if the Thread is interrupted WHEN sleeping) -- delay required as error printing is slower than printing, leading to an incorrect order in the terminal
     public static boolean isValid(String s) throws InterruptedException {
         //&& logic only returns true if ALL are true
-        return checkCharacters(s) && checkBrackets(s) && checkExpression(s);
-    }
-
-    public static boolean checkAdjacentOperators(String s){
-        int minuscount = 0;
-        for (int x = 1; x < s.length(); x++){
-            char prev = s.charAt(x-1);
-            char curr = s.charAt(x);
-        
-        
-            if (prev == '-' && curr == '-'){
-                minuscount++;
-            }
-            else{
-                minuscount = 0;
-            }
-
-            if (charOperatorSet.contains(prev) && charOperatorSet.contains(curr) && curr != '-' ) {
-                return false;
-            }
-
-            else if (minuscount >= 2){
-                return false;
-            }
-        }
-        
-    return true;
+        return checkCharacters(s) && checkBrackets(s) && checkExpression(s) && checkAdjacentOperators(s);
     }
 
     //checks that only operands and operators
     private static boolean checkCharacters(String s) throws InterruptedException{
-        //for eacch character in charOperators... add to array list
-        //array list is easier than array (using .contains)
-        for (char c : charOperators) {
-            operators.add(c);
+
+        //instantiate symbols
+        for (char c : validSymbols) {
+            symbols.add(c);
         }
 
         boolean characterValid = true;
     
         //for loop each char of string, check if numbers, operator, else valid = false
         for (int i = 0; i < s.length(); i++){
-            if (!(Character.isDigit(s.charAt(i)) || operators.contains(s.charAt(i)))){      
+            if (!(Character.isDigit(s.charAt(i)) || symbols.contains(s.charAt(i)))){      
                 characterValid = false;
             } 
         }
@@ -81,12 +52,27 @@ public class Validation{
                 bracketsPairsBalanced--;
             }
         }
-
         if (bracketsPairsBalanced != 0){
             System.err.println("Unbalanced brackets in expression - Requires a matching closing bracket for each open bracket.");
             Thread.sleep(500);
             return false;
-        } 
+        }
+
+        // below fixed brackets facing the wrong way around
+        int openBrackets = 0;
+        int closedBrackets = 0;
+        for (int i = 0; i < s.length(); i++){
+            if (s.charAt(i) == '('){
+                openBrackets++;
+            } else if (s.charAt(i) == ')'){
+                closedBrackets++;
+                if (openBrackets != closedBrackets){
+                    System.err.println("Misplaced brackets in expression - Ensure you have typed your expression correctly!");
+                    Thread.sleep(500);
+                    return false;
+                }
+            }
+        }
 
         //checking bracket positions/combinations
         //fill array list bracketList with brackets from exoression
@@ -124,9 +110,14 @@ public class Validation{
 
     //method to check that there is at least two operands with at least 1 operator between
     private static boolean checkExpression(String s) throws InterruptedException{
+    
+        //initiate operators
+        for (char c : validOperators) {
+            operators.add(c);
+        }
         
         if (s.equals("")){
-            System.err.println("Invalid expression - Requires a minimum of two operands with one operator between them.");
+            System.err.println("Empty expression - Requires a minimum of two operands with one operator between them.");
             Thread.sleep(500);
             return false;
         }
@@ -134,7 +125,7 @@ public class Validation{
         //to use ParseStringExpression, i have to remove brackets, but also consider )( as *
         //researched how to remove brackets and replace parts of strins with something else
         try {
-            String regexWhiteSpace = "\\s";
+            String regexWhiteSpace = "\s";
              s = s.replaceAll(regexWhiteSpace, "");
              //replace )( with *
              String regexMultiply = "\\)\\(";
@@ -171,10 +162,38 @@ public class Validation{
         }
 
         //check if at least 1 operator w/ 2 operands
-        if (operandCounter != operatorCounter + 1 || operandCounter < 2 || operatorCounter < 1){
+        // if (operandCounter != operatorCounter + 1 || ...
+        if (operandCounter < 2 || operatorCounter < 1){
             System.err.println("Invalid expression - Requires a minimum of two operands with one operator between them.");
             Thread.sleep(500);
             return false;
+        }
+        return true;
+    }
+
+    private static boolean checkAdjacentOperators(String s) throws InterruptedException{
+
+        int minusCounter = 0;
+
+        for (int i = 1; i < s.length(); i++){
+            char previousChar = s.charAt(i-1);
+            char currentChar = s.charAt(i);
+        
+            if (previousChar == '-' && currentChar == '-'){
+                minusCounter++;
+            } else{
+                minusCounter = 0;
+            }
+
+            if (operators.contains(previousChar) && operators.contains(currentChar) && currentChar != '-' ) {
+                System.err.println("Invalid expression - Too many adjacent operators.");
+                Thread.sleep(500);
+                return false;
+            } else if (minusCounter >= 2){
+                System.err.println("Invalid expression - Too many adjacent operators.");
+                Thread.sleep(500);
+                return false;
+            }
         }
         return true;
     }
