@@ -4,26 +4,10 @@ import java.util.Scanner;
 public class Menu {
 
     public static void clearScreen() {
-        System.out.print("\033\143");
+        System.out.println("\033\143");
     }
 
-    public static void runCalculator(Scanner input) throws InterruptedException {
-        System.out.print("Please enter an expression to be evaluated: ");
-        String str = input.nextLine();
-        while (!Validation.isValid(str)) {
-            System.out.print("Please try again, enter an expression to be evaluated: ");
-            str = input.nextLine();
-        }
-        System.out.println("Let's start our calculations!\n");
-        HandleBrackets appy = new HandleBrackets();
-        while (str.contains("(")){
-            str = appy.bracketSplitup(str);
-        }
-        double result = ParseStringExpression.evaluate(str);
-        System.out.println("\n...and it's as easy as that! Our result is " + result + "\n");
-    }
-
-    public static void main(String args[]) throws InterruptedException {
+    public static void mainMenu() throws InterruptedException {
         System.out.println("\n\t ________       ________       ________          ___");
         System.out.println("\t|\\   __  \\     |\\   __  \\     |\\   __  \\        |\\  \\      ");
         System.out.println("\t\\ \\  \\|\\  \\    \\ \\  \\|\\  \\    \\ \\  \\|\\  \\       \\ \\  \\ ");
@@ -49,16 +33,49 @@ public class Menu {
                 str = input.nextLine();
             }
             switch (str) {
-                case "1": runCalculator(input); break;
-                case "2":MatrixCalculator.main(new String[]{}); break;
+                case "1": runCalculator(input); return;
+                case "2":MatrixCalculator.main(new String[]{}); return;
                 case "3":
                     System.out.println("Thank you for using the OOO calculator!\nBye!! :)");
                     return;
             }
             clearScreen();
-
         }
+    }
 
+    public static void runCalculator(Scanner input) throws InterruptedException {
+        System.out.print("Please enter an expression to be evaluated: ");
+        String str = input.nextLine();
+        while (!Validation.isValid(str)) {
+            System.out.print("Please try again, enter an expression to be evaluated: ");
+            str = input.nextLine();
+        }
+        System.out.println("Let's start our calculations!\n");
+        HandleBrackets appy = new HandleBrackets();
+        while (str.contains("(")){
+            str = appy.bracketSplitup(str);
+        }
+        double result = ParseStringExpression.evaluate(str);
+        System.out.println("\n...and it's as easy as that! Our result is " + result + "\n");
+
+        System.out.print("Enter 1 to start a new calculation, or 2 to return to main menu: ");
+        String str2 = input.nextLine();
+        while (!(str2.equals("1") | str2.equals("2")) ) {
+            System.err.println("Invalid option. Please try again.");
+            Thread.sleep(500);
+            System.out.print("Enter 1 to start a new calculation, or 2 to return to main menu: ");
+            str2 = input.nextLine();
+        }
+        clearScreen();
+        if (str2.equals("2")) {
+            mainMenu();
+        } else {
+            runCalculator(input);
+        }
+    }
+
+    public static void main(String args[]) throws InterruptedException {
+        mainMenu();
     }
 
 }

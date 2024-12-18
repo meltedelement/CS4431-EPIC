@@ -14,7 +14,7 @@ public class MatrixCalculator {
             } else {
                 System.out.println(".");
             }
-            Thread.sleep(500);
+            Thread.sleep(200);
         }
 
         int rows1 = 0, cols1 = 0, rows2 = 0, cols2 = 0;
@@ -132,6 +132,21 @@ public class MatrixCalculator {
         } catch (Exception e) {
             System.out.println("An unexpected error occurred: " + e.getMessage());
         }
+
+        System.out.print("Enter 1 to start a new matrix calculation, or 2 to return to main menu: ");
+        String str2 = input.nextLine();
+        while (!(str2.equals("1") | str2.equals("2")) ) {
+            System.err.println("Invalid option. Please try again.");
+            Thread.sleep(500);
+            System.out.print("Enter 1 to start a new matrix calculation, or 2 to return to main menu: ");
+            str2 = input.nextLine();
+        }
+        clearScreen();
+        if (str2.equals("2")) {
+            Menu.mainMenu();
+        } else {
+            main(new String[]{});
+        }
     }
 
     public static int[][] readMatrix(Scanner scanner, int rows, int cols) {
@@ -227,6 +242,6 @@ public class MatrixCalculator {
     }
 
     public static void clearScreen() {
-        System.out.print("\033\143");
+        System.out.println("\033\143");
     }
 }
