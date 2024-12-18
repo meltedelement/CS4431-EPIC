@@ -95,10 +95,14 @@ public class Validation{
 
     //method to check that there is at least two operands with at least 1 operator between
     private static boolean checkExpression(String s) throws InterruptedException{
-        
+    
+        //initiate operators
+        for (char c : validOperators) {
+            operators.add(c);
+        }
         
         if (s.equals("")){
-            System.err.println("Invalid expression - Requires a minimum of two operands with one operator between them.");
+            System.err.println("Empty expression - Requires a minimum of two operands with one operator between them.");
             Thread.sleep(500);
             return false;
         }
@@ -106,7 +110,7 @@ public class Validation{
         //to use ParseStringExpression, i have to remove brackets, but also consider )( as *
         //researched how to remove brackets and replace parts of strins with something else
         try {
-            String regexWhiteSpace = "\\s";
+            String regexWhiteSpace = "\s";
              s = s.replaceAll(regexWhiteSpace, "");
              //replace )( with *
              String regexMultiply = "\\)\\(";
@@ -143,7 +147,8 @@ public class Validation{
         }
 
         //check if at least 1 operator w/ 2 operands
-        if (operandCounter != operatorCounter + 1 || operandCounter < 2 || operatorCounter < 1){
+        // if (operandCounter != operatorCounter + 1 || ...
+        if (operandCounter < 2 || operatorCounter < 1){
             System.err.println("Invalid expression - Requires a minimum of two operands with one operator between them.");
             Thread.sleep(500);
             return false;
@@ -152,11 +157,6 @@ public class Validation{
     }
 
     private static boolean checkAdjacentOperators(String s) throws InterruptedException{
-
-        //initiate operators
-        for (char c : validOperators) {
-            operators.add(c);
-        }
 
         int minusCounter = 0;
 
