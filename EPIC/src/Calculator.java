@@ -1,11 +1,3 @@
-interface Computer {
-    public double add(double i, double j);
-    public double subtract(double i, double j);
-    public double multiply(double i, double j);
-    public double divide(double i, double j);
-    public double power(double i, double j);
-}
-
 public class Calculator implements Computer {
 
     public static double calc(String operator, double i, double j) {
