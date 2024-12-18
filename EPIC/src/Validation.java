@@ -52,12 +52,27 @@ public class Validation{
                 bracketsPairsBalanced--;
             }
         }
-
         if (bracketsPairsBalanced != 0){
             System.err.println("Unbalanced brackets in expression - Requires a matching closing bracket for each open bracket.");
             Thread.sleep(500);
             return false;
-        } 
+        }
+
+        // below fixed brackets facing the wrong way around
+        int openBrackets = 0;
+        int closedBrackets = 0;
+        for (int i = 0; i < s.length(); i++){
+            if (s.charAt(i) == '('){
+                openBrackets++;
+            } else if (s.charAt(i) == ')'){
+                closedBrackets++;
+                if (openBrackets != closedBrackets){
+                    System.err.println("Misplaced brackets in expression - Ensure you have typed your expression correctly!");
+                    Thread.sleep(500);
+                    return false;
+                }
+            }
+        }
 
         //checking bracket positions/combinations
         //fill array list bracketList with brackets from exoression
