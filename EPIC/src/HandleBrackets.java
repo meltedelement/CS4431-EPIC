@@ -47,7 +47,7 @@ public class HandleBrackets {
         String test = "(1)(2)(1)";
         test = handleBrackets.bracketSplitup(test);
         while (test.contains("(")){
-            test = appy.bracketSplitup(test);
+            test = handleBrackets.bracketSplitup(test);
         }
         System.out.println("Before sending to skyes ting: " + test);
         System.out.println(ParseStringExpression.evaluate(test));
