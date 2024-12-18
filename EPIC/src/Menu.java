@@ -1,4 +1,3 @@
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu {
@@ -34,7 +33,7 @@ public class Menu {
             }
             switch (str) {
                 case "1": runCalculator(input); return;
-                case "2":MatrixCalculator.main(new String[]{}); return;
+                case "2": MatrixCalculator.runMatrix(); return;
                 case "3":
                     System.out.println("Thank you for using the OOO calculator!\nBye!! :)");
                     return;

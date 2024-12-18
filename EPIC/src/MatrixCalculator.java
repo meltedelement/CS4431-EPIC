@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class MatrixCalculator {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void runMatrix() throws InterruptedException {
         Scanner input = new Scanner(System.in);
 
         System.out.print("Welcome to the Matrix Calculator!");
@@ -145,7 +145,7 @@ public class MatrixCalculator {
         if (str2.equals("2")) {
             Menu.mainMenu();
         } else {
-            main(new String[]{});
+            runMatrix();
         }
     }
 
