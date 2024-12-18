@@ -14,8 +14,14 @@ Explanation for how this works:
 import java.util.ArrayList;
 public abstract class ParseStringExpression {
 
-    public static ArrayList<String> operators = new ArrayList<String>();
-    public static ArrayList<Double> operands = new ArrayList<Double>();
+    private static ArrayList<String> operators = new ArrayList<String>();
+    public static ArrayList<String> getOperators(){
+        return operators;
+    }
+    private static ArrayList<Double> operands = new ArrayList<Double>();
+    public static ArrayList<Double> getOperands(){
+        return operands;
+    }
     // need to add some encapsulation stuff so will make these private then add getter methods.
 
 
