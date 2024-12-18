@@ -3,18 +3,18 @@ import java.util.Scanner;
 
 public class MatrixCalculator {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void runMatrix() throws InterruptedException {
         Scanner input = new Scanner(System.in);
 
-        System.out.print("Welcome to the Matrix Calculator!");
+        System.out.print("\nWelcome to the Matrix Calculator!");
         Thread.sleep(1000);
         for (int x = 0; x < 3; x++) {
             if (x != 2) {
                 System.out.print(".");
             } else {
-                System.out.println(".");
+                System.out.println(".\n");
             }
-            Thread.sleep(500);
+            Thread.sleep(200);
         }
 
         int rows1 = 0, cols1 = 0, rows2 = 0, cols2 = 0;
@@ -132,6 +132,22 @@ public class MatrixCalculator {
         } catch (Exception e) {
             System.out.println("An unexpected error occurred: " + e.getMessage());
         }
+
+        System.out.print("\nEnter 1 to start a new matrix calculation, or 2 to return to main menu: ");
+        String str2 = input.nextLine();
+        str2 = input.nextLine();
+        while (!(str2.equals("1") || str2.equals("2")) ) {
+            System.err.println("Invalid option. Please try again.");
+            Thread.sleep(500);
+            System.out.print("Enter 1 to start a new matrix calculation, or 2 to return to main menu: ");
+            str2 = input.nextLine();
+        }
+        clearScreen();
+        if (str2.equals("2")) {
+            Menu.mainMenu();
+        } else {
+            runMatrix();
+        }
     }
 
     private static int[][] readMatrix(Scanner scanner, int rows, int cols) {
@@ -140,7 +156,7 @@ public class MatrixCalculator {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 try {
-                    System.out.println("Enter element for row " + (i + 1) + ", column " + (j + 1) + ": ");
+                    System.out.print("\tEnter element for row " + (i + 1) + ", column " + (j + 1) + ": ");
                     matrix[i][j] = scanner.nextInt();
                 } catch (InputMismatchException e) {
                     System.out.println("Invalid input! Please enter an integer.");
@@ -227,6 +243,6 @@ public class MatrixCalculator {
     }
 
     private static void clearScreen() {
-        System.out.print("\033\143");
+        System.out.println("\033\143");
     }
 }
