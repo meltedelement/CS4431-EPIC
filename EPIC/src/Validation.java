@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 //what needs to be checked: no letters, no symbols (other than operators), brackets are finished, and minumum expression parameters, and valid expression for 1 more operand than operator
 
@@ -6,6 +9,7 @@ public class Validation{
 
     //array list of operators - used in checkCharacters & checkExpression, and list of expression's brackets
     public static char[] charOperators = {'+', '-', '*', '/', '^', ' ', '(',')','>','.'};
+    public static Set<Character> charOperatorSet = new HashSet<>(Arrays.asList('+', '-', '*', '/', '^', ' ', '(', ')', '>', '.'));
     public static ArrayList<Character> operators = new ArrayList<>();
     public static ArrayList<Character> bracketList = new ArrayList<>();
 
@@ -13,6 +17,32 @@ public class Validation{
     public static boolean isValid(String s) throws InterruptedException {
         //&& logic only returns true if ALL are true
         return checkCharacters(s) && checkBrackets(s) && checkExpression(s);
+    }
+
+    public static boolean checkAdjacentOperators(String s){
+        int minuscount = 0;
+        for (int x = 1; x < s.length(); x++){
+            char prev = s.charAt(x-1);
+            char curr = s.charAt(x);
+        
+        
+            if (prev == '-' && curr == '-'){
+                minuscount++;
+            }
+            else{
+                minuscount = 0;
+            }
+
+            if (charOperatorSet.contains(prev) && charOperatorSet.contains(curr) && curr != '-' ) {
+                return false;
+            }
+
+            else if (minuscount >= 2){
+                return false;
+            }
+        }
+        
+    return true;
     }
 
     //checks that only operands and operators
@@ -130,12 +160,13 @@ public class Validation{
                 operatorCounter++;
                 readingOperand = false;
                 //adds to operator counter
+                //reading operand false
             //if character at i is an operand & its not already reading a long operand
-            } else if (Character.isDigit(s.charAt(i))) {
-                if (!readingOperand) {
-                    operandCounter++;
-                    readingOperand = true;
-                }
+            } else if (Character.isDigit(s.charAt(i)) && !readingOperand) {
+                operandCounter++;
+                readingOperand = true;
+                //adds to operand counter
+                //reading operand true
             }
         }
 
