@@ -25,5 +25,6 @@ public class TestingValidation {
         System.out.println("))3(15)+-4(((): " + Validation.isValid("))3(15)+-4((()")); // false
         System.out.println("3^2*2-12^-(1/2): " + Validation.isValid("3^2*2-12^-(1/2)")); // true
         System.out.println("1.324654353+ 5645767657: " + Validation.isValid("1.324654353+ 5645767657")); // true
+
     }
 }
