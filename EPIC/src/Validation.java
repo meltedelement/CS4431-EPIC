@@ -104,6 +104,8 @@ public class Validation{
         //to use ParseStringExpression, i have to remove brackets, but also consider )( as *
         //researched how to remove brackets and replace parts of strins with something else
         try {
+            String regexWhiteSpace = "\\s";
+             s = s.replaceAll(regexWhiteSpace, "");
              //replace )( with *
              String regexMultiply = "\\)\\(";
              s = s.replaceAll(regexMultiply, "*");
@@ -115,18 +117,29 @@ public class Validation{
              String regexClosedBracket = "\\)";
              s = s.replaceAll(regexClosedBracket, "");
         } catch (Exception e) {
-            //not a problem if no brackets so no error
+            //not a problem if no brackets so no handling needed
         }
 
-        //new problem: skyes stuff doesnt like me. 
+        int operatorCounter = 0;
+        int operandCounter = 0;
+        boolean readingOperand = false;
 
-        ParseStringExpression.splitEquation(s, "+-*/^");
-        ArrayList<Double> skyeOperands = ParseStringExpression.operands;
-        ArrayList<String> skyeOperators = ParseStringExpression.operators;
-        int operatorCounter = skyeOperators.size();
-        int operandCounter = skyeOperands.size();
+        for (int i = 0; i < s.length(); i++) {
+            //if character at i is in arraylist operators
+            if (operators.contains(s.charAt(i))) { 
+                operatorCounter++;
+                readingOperand = false;
+                //adds to operator counter
+            //if character at i is an operand & its not already reading a long operand
+            } else if (Character.isDigit(s.charAt(i))) {
+                if (!readingOperand) {
+                    operandCounter++;
+                    readingOperand = true;
+                }
+            }
+        }
 
-        //change to with at least 1 opertaro 2 operands
+        //check if at least 1 operator w/ 2 operands
         if (operandCounter != operatorCounter + 1 || operandCounter < 2 || operatorCounter < 1){
             System.err.println("Invalid expression - Requires a minimum of two operands with one operator between them.");
             Thread.sleep(500);
@@ -135,64 +148,3 @@ public class Validation{
         return true;
     }
 }
-
-//for other places:
-
-/*
-
-
-if (!Validation.isValid(userIn)){
-    System.err.println("Expression is invalid");
-}
-
-
-*/
-
-// GRAVEYARD
-
-//original checkExpression()
-//this is incredibly flawed as it cannot deal with negative numbers (double operators)
-
-        // // if theres one more operand than operator then its all g
-        // for(int i = 0; i < s.length(); i++){
-        //     if(operators.contains(s.charAt(i))){
-        //         operatorCounter--;
-        //     }
-        //     if(Character.isDigit(s.charAt(i))){
-        //         operandCounter--;
-        //     }
-        // }
-
-        // if (operatorCounter != 0 || operandCounter != 0){
-        //     return true;
-        // }
-        // return false;
-
- // // attempts to change )( to *:
-
-            // if((i < s.length() - 1 && s.charAt(i) == ')') || (i < (s.length() - 1) && s.charAt(i+1) == '(')){
-            //     System.out.println("adding the multiply thing");
-            //     bracketlessString.append("*");
-            //}
-
-            // //if ")(", then replace with a "*"
-            // try {
-            //     if( s.charAt(i) == ')' && s.charAt(i+1) == '('){
-            //         System.out.println("adding the multiply thing");
-            //         bracketlessString.append('*');
-            //     }
-            //  } catch (IndexOutOfBoundsException e) {
-            //      // TODO: handle exception
-            //  }
-
-            // for (int i = 0; i < s.length(); i++){
-
-        //     //researched how to remove brackets from a string because skyes file doesnt handle brackets - decided to use stringbuilder
-        // StringBuilder bracketlessString = new StringBuilder();
-            
-            //     if(s.charAt(i) != '(' && s.charAt(i) != ')'){
-            //         //.append = add, so, if the char is not a bracket, it will be added to bracketlessString.
-            //         System.out.println("adding the number");
-            //         bracketlessString.append(s.charAt(i));
-            //     }
-            // }
