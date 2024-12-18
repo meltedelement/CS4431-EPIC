@@ -55,7 +55,9 @@ public class Menu {
             str = appy.bracketSplitup(str);
         }
         double result = ParseStringExpression.evaluate(str);
-        System.out.println("\n...and it's as easy as that! Our result is " + result + "\n");
+        if (!Calculator.zeroError){
+            System.out.println("\n...and it's as easy as that! Our result is " + result + "\n");
+        }
 
         System.out.print("Enter 1 to start a new calculation, or 2 to return to main menu: ");
         String str2 = input.nextLine();
@@ -69,6 +71,7 @@ public class Menu {
         if (str2.equals("2")) {
             mainMenu();
         } else {
+            Calculator.zeroError = false;
             runCalculator(input);
         }
     }

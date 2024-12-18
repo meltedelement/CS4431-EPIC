@@ -55,7 +55,7 @@ public abstract class ParseStringExpression {
     }
 
 
-    public static double evaluate(String expression) {
+    public static double evaluate(String expression) throws InterruptedException {
         expression = expression.replaceAll("\\s",""); // remove all whitespace
         // This is the main method takes an input string expression without brackets and evaluates it.
         String[] orderOfOperations = {"^", "*/", "+-"}; // Can be changed for additional operators

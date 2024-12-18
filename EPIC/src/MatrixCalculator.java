@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class MatrixCalculator {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void runMatrix() throws InterruptedException {
         Scanner input = new Scanner(System.in);
 //welcome menu.
 // for loop prints "." every .5 seconds to give command line loading visual
